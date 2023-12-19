@@ -1,78 +1,64 @@
 #include <iostream>
 using namespace std;
 
-bool isValidMatrix(int matrix[][3], int sum) {
-  // Check row sums
-  for (int i = 0; i < 3; ++i) {
-    int rowSum = 0;
-    for (int j = 0; j < 3; ++j) {
-      rowSum += matrix[i][j];
-    }
-    if (rowSum != sum) {
-      return false;
-    }
-  }
+int main(){
+    int userNum;
+    int array[3][3];
+    bool check = false;
+    while (!check)
+    { 
+    cout<<"Enter the number (Divisible by 3): "; cin>>userNum;
+    cout<<endl;
 
-  // Check column sums
-  for (int j = 0; j < 3; ++j) {
-    int colSum = 0;
-    for (int i = 0; i < 3; ++i) {
-      colSum += matrix[i][j];
-    }
-    if (colSum != sum) {
-      return false;
-    }
-  }
-
-  // Check diagonals
-  int diagSum1 = matrix[0][0] + matrix[1][1] + matrix[2][2];
-  int diagSum2 = matrix[0][2] + matrix[1][1] + matrix[2][0];
-  if (diagSum1 != sum || diagSum2 != sum) {
-    return false;
-  }
-
-  return true;
-}
-
-void generateMatrix(int matrix[][3], int sum) {
-  // Initialize all elements to -1
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 3; ++j) {
-      matrix[i][j] = -1;
-    }
-  }
-
-  // Backtracking approach to fill the matrix
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 3; ++j) {
-      if (matrix[i][j] == -1) {
-        // Try different values for the current element
-        for (int value = 1; value <= 9; ++value) {
-          matrix[i][j] = value;
-          if (isValidMatrix(matrix, sum)) {
-            // Found a valid solution
-            // (Optionally print the matrix here)
-            return;
-          } else {
-            matrix[i][j] = -1; // Backtrack if invalid
-          }
+        if (userNum%3==0)
+        {
+            check = true;
         }
-      }
+        else
+        {
+            cout<<"Error!!!!\nPlease enter a number divisible by 3\n"<<endl;
+        }
+
     }
-  }
+    if (userNum<15)
+    {
+        int num = userNum/3;
+        for (int i=0; i<3; i++){
 
-  // No valid solution found
-  cout << "No valid matrix found for the given sum." << endl;
-}
+        for (int m=0; m<3; m++){
+            array[i][m] = num;
+        }
+    }
 
-int main() {
-  int sum;
-  cout << "Enter the desired sum: ";
-  cin >> sum;
+    }
 
-  int matrix[3][3];
+    if (userNum>=15)
+    { 
+    int middle = userNum/3;
+    int left, top, right, bottom,a,b,c,d;
 
-  generateMatrix(matrix, sum);
+    a = middle + 3 ; b = middle - 3;
+     c = middle + 1; d = middle - 1;
 
-  return 0;
+    left =  userNum -(a + b) ;
+    top = userNum - (a + c) ;
+    right = userNum -(b + c);
+    bottom = userNum - (b + d);
+
+    
+    array[0][0]= a; array[0][1]=top; array[0][2]=c; //row 1
+    array[1][0]=left; array[1][1]=middle; array[1][2]=right; //row 2
+    array[2][0]=d; array[2][1]=bottom; array[2][2]=b; //row 3
+
+    } //if statement closed for userNum>=15
+
+    //printing array
+    for (int i=0; i<3; i++){
+
+        for (int m=0; m<3; m++){
+            cout<<array[i][m]<<" ";
+        }
+        cout<<endl;
+    }
+
 }
